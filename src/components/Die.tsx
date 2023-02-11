@@ -1,45 +1,53 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { ReactComponent as Square } from '../assets/img/iconmonstr-square-filled.svg';
 import { ReactComponent as Rhombus } from '../assets/img/iconmonstr-rhombus-filled.svg';
 import { ReactComponent as Hexagon } from '../assets/img/iconmonstr-hexagon-filled.svg';
 
-interface IDieProps {
-	shape: string,
-	amount: Number,
+type DieProps = {
+	children: ReactNode,
 };
 
-function Die( props: IDieProps ) {
+type DieState = {
+	amount: Number
+};
+
+class Die extends React.Component<DieProps, DieState> {
 	
-	var svgComponent;
-	var svgComponents = [
-		{
-			shape: 'square', 
-			component: Square,
-		},
-		{
-			shape: 'rhombus', 
-			component: Rhombus,
-		},
-		{
-			shape: 'hexagon', 
-			component: Hexagon,
-		},
-	];
+	constructor( props: DieProps ) {
+		super( props );
+		this.state = {
+			amount: 0,
+		};
 
-	for( var i = 0; i < svgComponents.length; i++ ) {
-
-		var component = svgComponents[i];
-
-		if( props.shape === component.shape ) {
-			svgComponent = <component.component />;
-			break;
-		}
-
+		this.handleChange = this.handleChange.bind( this );
 	}
 
-	return( <div>
-		{ svgComponent }
-	</div> );
+	handleChange( event: React.ChangeEvent<HTMLInputElement> ) {
+		if( event.target.value === '' ) {
+			this.setState({
+				amount: 0,
+			});
+		} else {
+			this.setState({
+				amount: parseInt( event.target.value, 10 ),
+			});
+		}
+	};
+
+	render() {
+		return( 
+		<span className="die">
+			{ this.props.children }
+			<input 
+				type="number" 
+				className="die-amount"
+				min="0" 
+				value={ this.state.amount.toString() } 
+				onChange={ this.handleChange } 
+			/>
+		</span> 
+		);
+	}
 }
 
 export default Die;

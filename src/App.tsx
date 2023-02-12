@@ -24,6 +24,8 @@ class App extends React.Component<{}, AppState> {
     }
 
     this.diceAmountChange = this.diceAmountChange.bind( this );
+    this.rollCurrent = this.rollCurrent.bind( this );
+    this.clearCurrentRoll = this.clearCurrentRoll.bind( this );
 
     this.state = {
       rollLog: [],
@@ -63,6 +65,24 @@ class App extends React.Component<{}, AppState> {
 
   }
 
+  rollCurrent( event: React.MouseEvent<HTMLElement> ) {
+    console.log( 'roll' );
+  }
+
+  clearCurrentRoll( event: React.MouseEvent<HTMLElement> ) {
+
+    var currentRollClone: Array<DiceRoll> = this.state.currentRoll;
+
+    for( let i = 0; i < currentRollClone.length; i++ ) {
+        currentRollClone[i].amount = 0;
+    }
+
+    this.setState({
+      currentRoll: currentRollClone,
+    });
+
+  }
+
   render(){ 
     return (
     <div className="App">
@@ -76,8 +96,14 @@ class App extends React.Component<{}, AppState> {
         currentRoll={ this.state.currentRoll } 
       />
       <DiceForm />
-      <Button />
-      <Button />
+      <Button 
+        text="Roll"
+        clickHandler={ this.rollCurrent }
+      />
+      <Button 
+        text="Clear"
+        clickHandler={ this.clearCurrentRoll }
+      />
       <RollLog />
     </div>
     );

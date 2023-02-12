@@ -3,6 +3,14 @@ body, html {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@font-face {
+  font-family: 'star_wars_symbols';
+  src: url('assets/fonts/star-wars-symbols-eote-en-non-official-webfont.woff2') format('woff2'),
+       url('assets/fonts/star-wars-symbols-eote-en-non-official-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .App {
   height: 100vh;
   color: #fff;
@@ -35,6 +43,9 @@ section {
   border-radius: 5px;
   padding: 24px 24px;
 
+  font-family: 'star_wars_symbols';
+  font-size: 32px;
+  word-break: break-all;
   color: #fff;
   text-align: center;
 }

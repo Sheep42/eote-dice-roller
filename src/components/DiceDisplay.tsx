@@ -12,10 +12,6 @@ type DisplayProps = {
 
 class DiceDisplay extends React.Component<DisplayProps> {
 
-	// constructor( props: DisplayProps ) {
-	// 	super( props );
-	// }
-
 	render() {
 		return <div className="dice-display-container">
 			<Die

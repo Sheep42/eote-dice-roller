@@ -67,7 +67,8 @@ class App extends React.Component<{}, AppState> {
     return (
     <div className="App">
       <h1>Star Wars: Edge of the Empire Dice Roller</h1>
-      <p>A simple, functional dice roller for the Edge of the Empire tabletop</p>
+      <p>A simple dice roller for the Edge of the Empire tabletop</p>
+      <p>Click on the dice you want to roll and type in the amounts, then click the roll button.</p>
 
       <ResultsBox />
       <DiceDisplay 
@@ -106,14 +107,14 @@ export type DiceRoll = {
 
 export type Side = {
   sideNumber: Number,
-  amount: Number,
-  symbols: Array<DieSymbol>,
+  symbols: Array<string>,
 };
 
 export type DieSymbol = {
   key: string,
   displayName: string,
   glyph: string,
+  opposite?: string,
 };
 
 export type DieType = {
@@ -164,6 +165,48 @@ export const diceTypes: {[key: string]: DieType} = {
     key: 'force',
     displayName: 'Force',
     sides: [],
+  },
+};
+
+export const diceSymbols: {[key: string]: DieSymbol} = {
+  triumph: {
+    key: 'triumph',
+    displayName: 'Triumph',
+    glyph: '',
+  },
+  success: {
+    key: 'success',
+    displayName: 'Success',
+    glyph: '',
+    opposite: 'failure',
+  },
+  advantage: {
+    key: 'advantage',
+    displayName: 'Advantage',
+    glyph: '',
+    opposite: 'threat',
+  },
+  despair: {
+    key: 'despair',
+    displayName: 'Despair',
+    glyph: '',
+  },
+  failure: {
+    key: 'failure',
+    displayName: 'Failure',
+    glyph: '',
+    opposite: 'success',
+  },
+  threat: {
+    key: 'threat',
+    displayName: 'Threat',
+    glyph: '',
+    opposite: 'advantage',
+  },
+  blank: {
+    key: 'blank',
+    displayName: '',
+    glyph: '',
   },
 };
 

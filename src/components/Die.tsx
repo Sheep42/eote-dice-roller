@@ -17,11 +17,22 @@ class Die extends React.Component<DieProps> {
 	handleChange( event: React.ChangeEvent<HTMLInputElement> ) {
 		let key = event.target.dataset.key;
 		this.props.changeHandler( event, key );
-	};
+	}
+
+	handleFocus( event: React.FocusEvent<HTMLInputElement> ) {
+		event.target.select();
+	}
+
+	handleClick( event: React.MouseEvent<HTMLElement> ) {
+		let input: HTMLInputElement|null = event.currentTarget.querySelector( '.die-amount' );
+		input?.focus();
+	}
 
 	render() {
 		return( 
-		<span className="die">
+		<span className="die"
+			onClick={ this.handleClick }
+		>
 			{ this.props.children }
 			<input 
 				type="number" 
@@ -29,6 +40,7 @@ class Die extends React.Component<DieProps> {
 				data-key={ this.props.dieKey }
 				min="0" 
 				value={ this.props.amount.toString() } 
+				onFocus={ this.handleFocus }
 				onChange={ this.handleChange } 
 			/>
 		</span> 

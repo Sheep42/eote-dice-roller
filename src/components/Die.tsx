@@ -1,37 +1,22 @@
 import React, { ReactNode } from "react";
-import { ReactComponent as Square } from '../assets/img/iconmonstr-square-filled.svg';
-import { ReactComponent as Rhombus } from '../assets/img/iconmonstr-rhombus-filled.svg';
-import { ReactComponent as Hexagon } from '../assets/img/iconmonstr-hexagon-filled.svg';
 
 type DieProps = {
 	children: ReactNode,
+	changeHandler: Function,
+	amount: Number,
+	dieKey: string,
 };
 
-type DieState = {
-	amount: Number
-};
-
-class Die extends React.Component<DieProps, DieState> {
+class Die extends React.Component<DieProps> {
 	
 	constructor( props: DieProps ) {
 		super( props );
-		this.state = {
-			amount: 0,
-		};
-
 		this.handleChange = this.handleChange.bind( this );
 	}
 
 	handleChange( event: React.ChangeEvent<HTMLInputElement> ) {
-		if( event.target.value === '' ) {
-			this.setState({
-				amount: 0,
-			});
-		} else {
-			this.setState({
-				amount: parseInt( event.target.value, 10 ),
-			});
-		}
+		let key = event.target.dataset.key;
+		this.props.changeHandler( event, key );
 	};
 
 	render() {
@@ -41,8 +26,9 @@ class Die extends React.Component<DieProps, DieState> {
 			<input 
 				type="number" 
 				className="die-amount"
+				data-key={ this.props.dieKey }
 				min="0" 
-				value={ this.state.amount.toString() } 
+				value={ this.props.amount.toString() } 
 				onChange={ this.handleChange } 
 			/>
 		</span> 

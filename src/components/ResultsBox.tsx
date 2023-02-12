@@ -2,7 +2,11 @@ import React from "react";
 
 class ResultsBox extends React.Component {
 	render() {
-		return <div></div>;
+		return (
+		<div className="results-box">
+			
+		</div>
+		);
 	}
 }
 

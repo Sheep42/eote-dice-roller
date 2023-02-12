@@ -1,5 +1,6 @@
 body, html {
   background-color: #282c34;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .App {
@@ -7,6 +8,24 @@ body, html {
   color: #fff;
   text-align: center;
   padding: 24px 24px;
+}
+
+section {
+  margin-bottom: 24px;
+
+  &.section-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn {
+      margin-right: 16px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 .results-box {
@@ -23,11 +42,11 @@ body, html {
 .dice-display-container {
 
   margin-top: 80px;
-
+  
   .die {
     display: inline-block;
     position: relative;
-
+    
     .die-amount {
       position: absolute;
       top: 0;
@@ -48,6 +67,11 @@ body, html {
       text-shadow: #000 1px 1px 2px;
     }
 
+    &.white-bg .die-amount{ 
+      color: #000; 
+      text-shadow: #999 1px 1px 2px;
+    }
+    
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -60,4 +84,30 @@ body, html {
 
   }
 
+}
+
+.btn {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  opacity: 0.9;
+  transition: opacity 0.3s;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+    transition: opacity 0.3s;
+  }
+
+  &-primary {
+    background-color: #008799;
+    color: #fff;
+  }
+
+  &-secondary {
+    background-color: #ddd;
+    color: #444;
+  }
 }

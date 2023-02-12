@@ -90,20 +90,28 @@ class App extends React.Component<{}, AppState> {
       <p>A simple dice roller for the Edge of the Empire tabletop</p>
       <p>Click on the dice you want to roll and type in the amounts, then click the roll button.</p>
 
-      <ResultsBox />
-      <DiceDisplay 
-        numberChangeHandler={ this.diceAmountChange } 
-        currentRoll={ this.state.currentRoll } 
-      />
-      <DiceForm />
-      <Button 
-        text="Roll"
-        clickHandler={ this.rollCurrent }
-      />
-      <Button 
-        text="Clear"
-        clickHandler={ this.clearCurrentRoll }
-      />
+      <section className="section-roll">
+        <ResultsBox />
+        <DiceDisplay 
+          numberChangeHandler={ this.diceAmountChange } 
+          currentRoll={ this.state.currentRoll } 
+        />
+        <DiceForm />
+      </section>
+
+      <section className="section-btns">
+        <Button 
+          text="Roll"
+          className="btn btn-primary"
+          clickHandler={ this.rollCurrent }
+        />
+        <Button 
+          text="Clear"
+          className="btn btn-secondary"
+          clickHandler={ this.clearCurrentRoll }
+        />
+      </section>
+
       <RollLog />
     </div>
     );

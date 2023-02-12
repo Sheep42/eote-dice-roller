@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { diceTypes } from "../App";
 
 type DieProps = {
 	children: ReactNode,
@@ -30,7 +31,7 @@ class Die extends React.Component<DieProps> {
 
 	render() {
 		return( 
-		<span className="die"
+		<span className={ this.props.dieKey === diceTypes.force.key ? "die white-bg" : "die" }
 			onClick={ this.handleClick }
 		>
 			{ this.props.children }

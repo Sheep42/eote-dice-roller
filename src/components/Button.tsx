@@ -3,6 +3,7 @@ import React from "react";
 type ButtonProps = {
 	text: string,
 	clickHandler: Function,
+	className: string
 };
 
 class Button extends React.Component<ButtonProps> {
@@ -20,6 +21,7 @@ class Button extends React.Component<ButtonProps> {
 		return (
 		<button
 			onClick={ this.handleClick }
+			className={ this.props.className }
 		>
 			{ this.props.text }
 		</button>

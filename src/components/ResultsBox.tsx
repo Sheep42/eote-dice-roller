@@ -43,7 +43,7 @@ class ResultsBox extends React.Component<ResultsBoxProps> {
 				i++;
 			}
 	
-		} else {
+		} else if( this.props.fullRoll.length > 0 ) {
 			rollCalced = 'Wash';
 		}
 

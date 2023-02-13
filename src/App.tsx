@@ -66,7 +66,73 @@ class App extends React.Component<{}, AppState> {
   }
 
   rollCurrent( event: React.MouseEvent<HTMLElement> ) {
-    console.log( 'roll' );
+
+    let fullRoll = [];
+
+    // Roll the dice
+    for( let i = 0; i < this.state.currentRoll.length; i++ ) {
+      
+      if( this.state.currentRoll[i].amount <= 0 ) {
+        continue;
+      }
+
+      let dieKey = this.state.currentRoll[i].key;
+      let die = diceTypes[dieKey];
+
+      for( let j = 0; j < this.state.currentRoll[i].amount; j++ ) {
+
+        let side = Math.floor( Math.random() * die.sides.length );
+        let roll = die.sides[side];
+        
+        for( let k = 0; k < roll.length; k++ ) {
+          fullRoll.push( roll[k] );
+        }
+
+      }
+
+    }
+
+    // Calculate the roll outcome
+    let fullRollClone = [...fullRoll];
+    let calcRoll = [];
+    for( let i = 0; i < fullRollClone.length; i++ ) {
+
+      if( fullRollClone[i].key === diceSymbols.blank.key ) {
+        continue;
+      }
+
+      if( !fullRollClone[i].opposite ) {
+        calcRoll.push( fullRollClone[i] );
+        continue;
+      }
+
+      let oppositeFound = false;
+      for( let j = i; j < fullRollClone.length; j++ ) {
+        
+        if( fullRollClone[j].key === fullRollClone[i].opposite ) {
+          fullRollClone.splice( j, 1 );
+          oppositeFound = true;
+          break;
+        }
+
+      }
+
+      if( oppositeFound ) {
+        continue;
+      }
+
+      calcRoll.push( fullRollClone[i] );
+
+    }
+    
+    this.setState({
+      rollOutcome: {
+        dice: this.state.currentRoll,
+        fullRoll,
+        calcRoll,
+      },
+    })
+
   }
 
   clearCurrentRoll( event: React.MouseEvent<HTMLElement> ) {
@@ -91,7 +157,10 @@ class App extends React.Component<{}, AppState> {
       <p>Click on the dice you want to roll and type in the amounts, then click the roll button.</p>
 
       <section className="section-roll">
-        <ResultsBox />
+        <ResultsBox 
+          fullRoll={ this.state.rollOutcome.fullRoll }
+          calcRoll={ this.state.rollOutcome.calcRoll }
+        />
         <DiceDisplay 
           numberChangeHandler={ this.diceAmountChange } 
           currentRoll={ this.state.currentRoll } 
@@ -119,17 +188,17 @@ class App extends React.Component<{}, AppState> {
 }
 
 type AppState = {
-  rollLog: Array<IRollOutcome>,
+  rollLog: Array<RollOutcome>,
   currentRoll: Array<DiceRoll>,
-  rollOutcome: IRollOutcome
+  rollOutcome: RollOutcome
 };
 
 // The combined results of all dice rolls
 // { dice: [{ key: 'green', displayName: 'Green', amount: 3 }], fullRoll: [{ key: 'adv', displayName: 'Advantage', amount: 2 }] }
-export interface IRollOutcome {
+export type RollOutcome = {
   dice: Array<DiceRoll>,
-  fullRoll: Array<IResult>,
-  calcRoll: Array<IResult>,
+  fullRoll: Array<DieSymbol>,
+  calcRoll: Array<DieSymbol>,
 };
 
 // The dice roll details - { key: 'green', displayName: 'Green', amount: 3 }
@@ -143,19 +212,13 @@ export type DieSymbol = {
   key: string,
   displayName?: string,
   glyph?: string,
+  opposite?: string,
 };
 
 export type DieType = {
   key: string,
   displayName: string,
   sides: Array<Array<DieSymbol>>,
-};
-
-// The result of a single die roll - { key: 'adv', displayName: 'Advantage', amount: 2 }
-export interface IResult {
-  key: string,
-  displayName: string,
-  amount: Number,
 };
 
 export const diceSymbols: {[key: string]: DieSymbol} = {
@@ -168,11 +231,13 @@ export const diceSymbols: {[key: string]: DieSymbol} = {
     key: 'success',
     displayName: 'Success',
     glyph: 'q',
+    opposite: 'failure',
   },
   advantage: {
     key: 'advantage',
     displayName: 'Advantage',
     glyph: 'w',
+    opposite: 'threat',
   },
   despair: {
     key: 'despair',
@@ -183,11 +248,13 @@ export const diceSymbols: {[key: string]: DieSymbol} = {
     key: 'failure',
     displayName: 'Failure',
     glyph: 'r',
+    opposite: 'success',
   },
   threat: {
     key: 'threat',
     displayName: 'Threat',
     glyph: 't',
+    opposite: 'advantage',
   },
   blank: {
     key: 'blank',

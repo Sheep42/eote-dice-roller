@@ -139,22 +139,16 @@ export type DiceRoll = {
   amount: Number,
 };
 
-export type Side = {
-  sideNumber: Number,
-  symbols: Array<string>,
-};
-
 export type DieSymbol = {
   key: string,
-  displayName: string,
-  glyph: string,
-  opposite?: string,
+  displayName?: string,
+  glyph?: string,
 };
 
 export type DieType = {
   key: string,
   displayName: string,
-  sides: Array<Side>,
+  sides: Array<Array<DieSymbol>>,
 };
 
 // The result of a single die roll - { key: 'adv', displayName: 'Advantage', amount: 2 }
@@ -164,83 +158,233 @@ export interface IResult {
   amount: Number,
 };
 
-export const diceTypes: {[key: string]: DieType} = {
-  green: {
-    key: 'green',
-    displayName: 'Green',
-    sides: [],
-  },
-  yellow: {
-    key: 'yellow',
-    displayName: 'Yellow',
-    sides: [],
-  },
-  blue: {
-    key: 'blue',
-    displayName: 'Blue',
-    sides: [],
-  },
-  purple: {
-    key: 'purple',
-    displayName: 'Purple',
-    sides: [],
-  },
-  red: {
-    key: 'red',
-    displayName: 'Red',
-    sides: [],
-  },
-  black: {
-    key: 'black',
-    displayName: 'Black',
-    sides: [],
-  },
-  force: {
-    key: 'force',
-    displayName: 'Force',
-    sides: [],
-  },
-};
-
 export const diceSymbols: {[key: string]: DieSymbol} = {
   triumph: {
     key: 'triumph',
     displayName: 'Triumph',
-    glyph: '',
+    glyph: 'e',
   },
   success: {
     key: 'success',
     displayName: 'Success',
-    glyph: '',
-    opposite: 'failure',
+    glyph: 'q',
   },
   advantage: {
     key: 'advantage',
     displayName: 'Advantage',
-    glyph: '',
-    opposite: 'threat',
+    glyph: 'w',
   },
   despair: {
     key: 'despair',
     displayName: 'Despair',
-    glyph: '',
+    glyph: 'y',
   },
   failure: {
     key: 'failure',
     displayName: 'Failure',
-    glyph: '',
-    opposite: 'success',
+    glyph: 'r',
   },
   threat: {
     key: 'threat',
     displayName: 'Threat',
-    glyph: '',
-    opposite: 'advantage',
+    glyph: 't',
   },
   blank: {
     key: 'blank',
-    displayName: '',
-    glyph: '',
+  },
+  dark: {
+    key: 'dark',
+    displayName: 'Dark Side',
+    glyph: 'i',
+  },
+  light: {
+    key: 'light',
+    displayName: 'Light Side',
+    glyph: 'u',
+  }
+};
+
+export const diceTypes: {[key: string]: DieType} = {
+  green: {
+    key: 'green',
+    displayName: 'Green',
+    sides: [
+      [ diceSymbols.success ],
+      [ diceSymbols.advantage ],
+      [
+        diceSymbols.success,
+        diceSymbols.advantage,
+      ],
+      [
+        diceSymbols.success,
+        diceSymbols.success,
+      ],
+      [ diceSymbols.advantage ],
+      [ diceSymbols.success ],
+      [
+        diceSymbols.advantage,
+        diceSymbols.advantage,
+      ],
+      [ diceSymbols.blank ],
+    ],
+  },
+  yellow: {
+    key: 'yellow',
+    displayName: 'Yellow',
+    sides: [
+      [
+        diceSymbols.advantage,
+        diceSymbols.advantage,
+      ],
+      [ diceSymbols.advantage ],
+      [
+        diceSymbols.advantage,
+        diceSymbols.advantage,
+      ],
+      [ diceSymbols.triumph ],
+      [ diceSymbols.success ],
+      [
+        diceSymbols.success,
+        diceSymbols.advantage,
+      ],
+      [ diceSymbols.success ],
+      [
+        diceSymbols.success,
+        diceSymbols.advantage,
+      ],
+      [ 
+        diceSymbols.success,
+        diceSymbols.success,
+      ],
+      [
+        diceSymbols.success,
+        diceSymbols.advantage,
+      ],
+      [ 
+        diceSymbols.success,
+        diceSymbols.success,
+      ],
+      [ diceSymbols.blank ],
+    ],
+  },
+  blue: {
+    key: 'blue',
+    displayName: 'Blue',
+    sides: [
+      [
+        diceSymbols.success,
+        diceSymbols.advantage,
+      ],
+      [ diceSymbols.advantage ],
+      [
+        diceSymbols.advantage,
+        diceSymbols.advantage,
+      ],
+      [ diceSymbols.blank ],
+      [ diceSymbols.success ],
+      [ diceSymbols.blank ],
+    ],
+  },
+  purple: {
+    key: 'purple',
+    displayName: 'Purple',
+    sides: [
+      [ diceSymbols.threat ],
+      [ diceSymbols.failure ],
+      [ 
+        diceSymbols.threat, 
+        diceSymbols.failure, 
+      ],
+      [ diceSymbols.threat ],
+      [ diceSymbols.blank ],
+      [
+        diceSymbols.threat,
+        diceSymbols.threat,
+      ],
+      [
+        diceSymbols.failure,
+        diceSymbols.failure,
+      ],
+      [ diceSymbols.threat ],
+    ],
+  },
+  red: {
+    key: 'red',
+    displayName: 'Red',
+    sides: [
+      [
+        diceSymbols.threat,
+        diceSymbols.threat,
+      ],
+      [ diceSymbols.threat ],
+      [
+        diceSymbols.threat,
+        diceSymbols.threat,
+      ],
+      [ diceSymbols.threat ],
+      [
+        diceSymbols.threat,
+        diceSymbols.failure,
+      ],
+      [ diceSymbols.failure ],
+      [
+        diceSymbols.threat,
+        diceSymbols.failure,
+      ],
+      [ diceSymbols.failure ],
+      [
+        diceSymbols.failure,
+        diceSymbols.failure,
+      ],
+      [ diceSymbols.despair ],
+      [
+        diceSymbols.failure,
+        diceSymbols.failure,
+      ],
+      [ diceSymbols.blank ],
+    ],
+  },
+  black: {
+    key: 'black',
+    displayName: 'Black',
+    sides: [
+      [ diceSymbols.failure ],
+      [ diceSymbols.failure ],
+      [ diceSymbols.threat ],
+      [ diceSymbols.threat ],
+      [ diceSymbols.blank ],
+      [ diceSymbols.blank ],
+    ],
+  },
+  force: {
+    key: 'force',
+    displayName: 'Force',
+    sides: [
+      [ diceSymbols.dark ],
+      [
+        diceSymbols.light,
+        diceSymbols.light,
+      ],
+      [ diceSymbols.dark ],
+      [
+        diceSymbols.light,
+        diceSymbols.light,
+      ],
+      [ diceSymbols.dark ],
+      [
+        diceSymbols.light,
+        diceSymbols.light,
+      ],
+      [ diceSymbols.dark ],
+      [ diceSymbols.light ],
+      [ diceSymbols.dark ],
+      [ diceSymbols.light ],
+      [ diceSymbols.dark ],
+      [
+        diceSymbols.dark,
+        diceSymbols.dark,
+      ],
+    ],
   },
 };
 

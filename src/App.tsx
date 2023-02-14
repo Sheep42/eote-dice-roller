@@ -92,24 +92,38 @@ class App extends React.Component<{}, AppState> {
     }
 
     // Calculate the roll outcome
-    let fullRollClone = [...fullRoll];
-    let calcRoll = [];
-    for( let i = 0; i < fullRollClone.length; i++ ) {
+    let calcRoll = this.calculateRoll( [...fullRoll] );
+    
+    this.setState({
+      rollOutcome: {
+        dice: this.state.currentRoll,
+        fullRoll,
+        calcRoll,
+      },
+    })
 
-      if( fullRollClone[i].key === diceSymbols.blank.key ) {
+  }
+
+  calculateRoll( fullRoll: Array<DieSymbol> ): Array<DieSymbol> {
+
+    let calcRoll = [];
+
+    for( let i = 0; i < fullRoll.length; i++ ) {
+
+      if( fullRoll[i].key === diceSymbols.blank.key ) {
         continue;
       }
 
-      if( !fullRollClone[i].opposite ) {
-        calcRoll.push( fullRollClone[i] );
+      if( !fullRoll[i].opposite ) {
+        calcRoll.push( fullRoll[i] );
         continue;
       }
 
       let oppositeFound = false;
-      for( let j = i; j < fullRollClone.length; j++ ) {
+      for( let j = i; j < fullRoll.length; j++ ) {
         
-        if( fullRollClone[j].key === fullRollClone[i].opposite ) {
-          fullRollClone.splice( j, 1 );
+        if( fullRoll[j].key === fullRoll[i].opposite ) {
+          fullRoll.splice( j, 1 );
           oppositeFound = true;
           break;
         }
@@ -120,17 +134,11 @@ class App extends React.Component<{}, AppState> {
         continue;
       }
 
-      calcRoll.push( fullRollClone[i] );
+      calcRoll.push( fullRoll[i] );
 
     }
-    
-    this.setState({
-      rollOutcome: {
-        dice: this.state.currentRoll,
-        fullRoll,
-        calcRoll,
-      },
-    })
+
+    return calcRoll;
 
   }
 
@@ -179,7 +187,9 @@ class App extends React.Component<{}, AppState> {
         />
       </section>
 
-      <RollLog />
+      <section className='section-roll-log'>
+        <RollLog rollLog={ this.state.rollLog } />
+      </section>
     </div>
     );
   }

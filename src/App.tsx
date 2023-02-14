@@ -145,11 +145,8 @@ class App extends React.Component<{}, AppState> {
 
   pushToLog( roll: RollOutcome ) {
     
-    let rollLog = [...this.state.rollLog, roll];
-    rollLog.push( roll );
-
     this.setState({
-      rollLog: [...this.state.rollLog, roll],
+      rollLog: [roll, ...this.state.rollLog],
     });
 
   }
@@ -200,6 +197,7 @@ class App extends React.Component<{}, AppState> {
       </section>
 
       <section className='section-roll-log'>
+        <h3>Roll Log</h3>
         <RollLog rollLog={ this.state.rollLog } />
       </section>
     </div>

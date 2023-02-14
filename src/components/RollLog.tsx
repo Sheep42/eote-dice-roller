@@ -72,7 +72,7 @@ class RollLog extends React.Component<RollLogProps> {
 						<th>Dice</th>
 						<th>Roll</th>
 						<th>Outcome</th>
-						{/* <th>Action</th> */}
+						<th>ReRoll (Coming Soon)</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -1,9 +1,16 @@
 import React from "react";
+import { RollOutcome } from "../App";
 
-class RollLog extends React.Component {
+type RollLogProps = {
+	rollLog: Array<RollOutcome>,
+};
+
+class RollLog extends React.Component<RollLogProps> {
 	render() {
 		return (
-			<div className="roll-log">Roll Log Coming Soon</div>
+			<table className="roll-log">
+
+			</table>
 		);
 	}
 }

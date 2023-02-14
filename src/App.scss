@@ -97,6 +97,35 @@ section {
 
 }
 
+.section-roll-log {
+  overflow: scroll;
+}
+
+.roll-log {
+  width: 650px;
+  margin: 0 auto;
+  text-align: left;
+
+  @media( min-width: 949px ) {
+    width: 800px;
+  }
+
+  tr {
+    td {
+      
+      padding: 16px 16px 16px 0;
+      
+    }
+  }
+  
+  .symbols {
+    font-family: 'star_wars_symbols';
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+}
+
 .btn {
   padding: 8px 24px;
   border: none;

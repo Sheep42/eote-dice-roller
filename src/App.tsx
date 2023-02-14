@@ -39,7 +39,7 @@ class App extends React.Component<{}, AppState> {
 
   diceAmountChange( event: React.ChangeEvent<HTMLInputElement>, key: string ) {
     
-    var currentRollClone: Array<DiceRoll> = this.state.currentRoll;
+    var currentRollClone: Array<DiceRoll> = this.state.currentRoll.map((roll => Object.assign({}, roll)));
     var dieAmt: Number = 0;
     
     if( event.target.value.trim() !== "" ) {
@@ -57,9 +57,7 @@ class App extends React.Component<{}, AppState> {
     }
 
     this.setState({
-      rollLog: this.state.rollLog,
       currentRoll: currentRollClone,
-      rollOutcome: this.state.rollOutcome,
     });
 
   }
@@ -93,14 +91,17 @@ class App extends React.Component<{}, AppState> {
 
     // Calculate the roll outcome
     let calcRoll = this.calculateRoll( [...fullRoll] );
-    
+    let rollOutcome = {
+      dice: this.state.currentRoll.map( roll => Object.assign( {}, roll ) ),
+      fullRoll,
+      calcRoll,
+    };
+
     this.setState({
-      rollOutcome: {
-        dice: this.state.currentRoll,
-        fullRoll,
-        calcRoll,
-      },
+      rollOutcome: Object.assign( {}, rollOutcome ),
     })
+
+    this.pushToLog( rollOutcome );
 
   }
 
@@ -142,9 +143,20 @@ class App extends React.Component<{}, AppState> {
 
   }
 
+  pushToLog( roll: RollOutcome ) {
+    
+    let rollLog = [...this.state.rollLog, roll];
+    rollLog.push( roll );
+
+    this.setState({
+      rollLog: [...this.state.rollLog, roll],
+    });
+
+  }
+
   clearCurrentRoll( event: React.MouseEvent<HTMLElement> ) {
 
-    var currentRollClone: Array<DiceRoll> = this.state.currentRoll;
+    var currentRollClone: Array<DiceRoll> = this.state.currentRoll.map( roll => Object.assign( {}, roll ) );
 
     for( let i = 0; i < currentRollClone.length; i++ ) {
         currentRollClone[i].amount = 0;
@@ -202,7 +214,6 @@ type AppState = {
 };
 
 // The combined results of all dice rolls
-// { dice: [{ key: 'green', displayName: 'Green', amount: 3 }], fullRoll: [{ key: 'adv', displayName: 'Advantage', amount: 2 }] }
 export type RollOutcome = {
   dice: Array<DiceRoll>,
   fullRoll: Array<DieSymbol>,

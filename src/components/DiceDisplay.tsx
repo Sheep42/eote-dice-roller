@@ -3,7 +3,7 @@ import Die from "./Die";
 import { ReactComponent as Square } from '../assets/img/iconmonstr-square-filled.svg';
 import { ReactComponent as Rhombus } from '../assets/img/iconmonstr-rhombus-filled.svg';
 import { ReactComponent as Hexagon } from '../assets/img/iconmonstr-hexagon-filled.svg';
-import { DiceRoll, diceTypes, getAmountForDie, getDiceRollForKey } from "../App";
+import { DiceRoll, diceTypes, getAmountForDie } from "../App";
 
 type DisplayProps = {
 	numberChangeHandler: Function,

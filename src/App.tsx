@@ -4,7 +4,6 @@ import './App.scss';
 import './components/DiceDisplay.tsx';
 import DiceDisplay from './components/DiceDisplay';
 import ResultsBox from './components/ResultsBox';
-import DiceForm from './components/DiceForm';
 import Button from './components/Button';
 import RollLog from './components/RollLog';
 
@@ -165,7 +164,6 @@ class App extends React.Component<{}, AppState> {
           numberChangeHandler={ this.diceAmountChange } 
           currentRoll={ this.state.currentRoll } 
         />
-        <DiceForm />
       </section>
 
       <section className="section-btns">

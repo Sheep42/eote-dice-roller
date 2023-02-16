@@ -25,6 +25,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 48px;
 
     .btn {
       margin-right: 16px;
@@ -103,7 +104,7 @@ section {
 
 .roll-log {
   width: 650px;
-  margin: 60px auto;
+  margin: 0 auto;
   text-align: left;
 
   @media( min-width: 949px ) {

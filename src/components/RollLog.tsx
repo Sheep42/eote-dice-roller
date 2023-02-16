@@ -12,8 +12,6 @@ class RollLog extends React.Component<RollLogProps> {
 
 		let rows: Array<ReactNode> = [];
 
-		console.log( this.props.rollLog );
-
 		for( let i = 0; i < this.props.rollLog.length; i++ ) {
 
 			let row: ReactNode;

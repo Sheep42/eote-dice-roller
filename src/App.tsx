@@ -31,6 +31,7 @@ class App extends React.Component<{}, AppState> {
     this.diceAmountChange = this.diceAmountChange.bind( this );
     this.rollCurrent = this.rollCurrent.bind( this );
     this.clearCurrentRoll = this.clearCurrentRoll.bind( this );
+    this.clearRollLog = this.clearRollLog.bind( this );
 
     this.state = {
       rollLog: log,
@@ -151,7 +152,7 @@ class App extends React.Component<{}, AppState> {
 
   pushToLog( roll: RollOutcome ) {
     
-    let log = [roll, ...this.state.rollLog];
+    let log = this.state.rollLog.length >= 50 ? [roll] : [roll, ...this.state.rollLog];
 
     localStorage.setItem( 'rollLog', JSON.stringify( log ) );
 
@@ -171,6 +172,18 @@ class App extends React.Component<{}, AppState> {
 
     this.setState({
       currentRoll: currentRollClone,
+    });
+
+  }
+
+  clearRollLog() {
+
+    let log: RollOutcome[] = [];
+
+    localStorage.setItem( 'rollLog', JSON.stringify( log ) );
+
+    this.setState({
+      rollLog: log,
     });
 
   }
@@ -200,14 +213,19 @@ class App extends React.Component<{}, AppState> {
           clickHandler={ this.rollCurrent }
         />
         <Button 
-          text="Clear"
+          text="Clear Dice"
           className="btn btn-secondary"
           clickHandler={ this.clearCurrentRoll }
         />
+        <Button 
+          text="Clear Log"
+          className="btn btn-secondary"
+          clickHandler={ this.clearRollLog }
+        />
       </section>
 
+      <h3>Roll Log</h3>
       <section className='section-roll-log'>
-        <h3>Roll Log</h3>
         <RollLog rollLog={ this.state.rollLog } />
       </section>
     </div>

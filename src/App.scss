@@ -116,6 +116,11 @@ section {
       
       width: 25%;
       padding: 16px 16px 16px 0;
+      word-break: break-word;
+
+      &.symbols {
+        word-break: break-all;
+      }
       
     }
   }

@@ -13,6 +13,12 @@ class App extends React.Component<{}, AppState> {
     super( props );
 
     let initRoll: Array<DiceRoll> = [];
+    let log = []; 
+    
+    let localStorageLog: string|null = localStorage.getItem( 'rollLog' );
+    if( localStorageLog !== null ) {
+      log = JSON.parse( localStorageLog );
+    }
 
     for( var prop in diceTypes ) {
       initRoll.push({
@@ -27,7 +33,7 @@ class App extends React.Component<{}, AppState> {
     this.clearCurrentRoll = this.clearCurrentRoll.bind( this );
 
     this.state = {
-      rollLog: [],
+      rollLog: log,
       currentRoll: initRoll,
       rollOutcome: {
         dice: [],
@@ -145,8 +151,12 @@ class App extends React.Component<{}, AppState> {
 
   pushToLog( roll: RollOutcome ) {
     
+    let log = [roll, ...this.state.rollLog];
+
+    localStorage.setItem( 'rollLog', JSON.stringify( log ) );
+
     this.setState({
-      rollLog: [roll, ...this.state.rollLog],
+      rollLog: log,
     });
 
   }

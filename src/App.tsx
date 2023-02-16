@@ -32,6 +32,7 @@ class App extends React.Component<{}, AppState> {
     this.rollCurrent = this.rollCurrent.bind( this );
     this.clearCurrentRoll = this.clearCurrentRoll.bind( this );
     this.clearRollLog = this.clearRollLog.bind( this );
+    this.handleReroll = this.handleReroll.bind( this );
 
     this.state = {
       rollLog: log,
@@ -69,7 +70,7 @@ class App extends React.Component<{}, AppState> {
 
   }
 
-  rollCurrent( event: React.MouseEvent<HTMLElement> ) {
+  rollCurrent( event: React.MouseEvent<HTMLElement>|null ) {
 
     let fullRoll = [];
 
@@ -188,6 +189,14 @@ class App extends React.Component<{}, AppState> {
 
   }
 
+  handleReroll( roll: DiceRoll[] ) {
+
+    this.setState({
+      currentRoll: roll,
+    }, () => this.rollCurrent( null ) );
+
+  }
+
   render(){ 
     return (
     <div className="App">
@@ -226,7 +235,10 @@ class App extends React.Component<{}, AppState> {
 
       <h3>Roll Log</h3>
       <section className='section-roll-log'>
-        <RollLog rollLog={ this.state.rollLog } />
+        <RollLog 
+          rollLog={ this.state.rollLog }
+          handleReroll={ this.handleReroll } 
+        />
       </section>
     </div>
     );

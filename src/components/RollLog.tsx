@@ -4,6 +4,7 @@ import Button from "./Button";
 
 type RollLogProps = {
 	rollLog: Array<RollOutcome>,
+	handleReroll: Function,
 };
 
 class RollLog extends React.Component<RollLogProps> {
@@ -44,13 +45,13 @@ class RollLog extends React.Component<RollLogProps> {
 				<td>{ dice }</td>
 				<td className="symbols">{ fullRoll }</td>
 				<td className="symbols">{ calcRoll }</td>
-				{/* <td>
+				<td>
 					<Button 
 						text="Roll Again" 
-						clickHandler={ () => console.log( 'click' ) } 
+						clickHandler={ () => this.props.handleReroll( this.props.rollLog[i].dice ) } 
 						className="btn btn-primary" 
 					/>
-				</td> */}
+				</td>
 			</tr>
 			);
 
@@ -70,7 +71,7 @@ class RollLog extends React.Component<RollLogProps> {
 						<th>Dice</th>
 						<th>Roll</th>
 						<th>Outcome</th>
-						<th>ReRoll (Coming Soon)</th>
+						<th>ReRoll</th>
 					</tr>
 				</thead>
 				<tbody>

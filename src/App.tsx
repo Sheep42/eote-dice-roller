@@ -365,7 +365,10 @@ export const diceTypes: {[key: string]: DieType} = {
         diceSymbols.advantage,
         diceSymbols.advantage,
       ],
-      [ diceSymbols.triumph ],
+      [ 
+        diceSymbols.triumph,
+        diceSymbols.success, 
+      ],
       [ diceSymbols.success ],
       [
         diceSymbols.success,
@@ -460,7 +463,10 @@ export const diceTypes: {[key: string]: DieType} = {
         diceSymbols.failure,
         diceSymbols.failure,
       ],
-      [ diceSymbols.despair ],
+      [ 
+        diceSymbols.despair,
+        diceSymbols.failure, 
+      ],
       [
         diceSymbols.failure,
         diceSymbols.failure,

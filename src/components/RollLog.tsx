@@ -5,6 +5,7 @@ import Button from "./Button";
 type RollLogProps = {
 	rollLog: Array<RollOutcome>,
 	handleReroll: Function,
+	showRollLog: Boolean,
 };
 
 class RollLog extends React.Component<RollLogProps> {
@@ -64,7 +65,7 @@ class RollLog extends React.Component<RollLogProps> {
 	}
 
 	render() {
-		return (
+		return this.props.showRollLog ? (
 			<table className="roll-log">
 				<thead>
 					<tr>
@@ -78,7 +79,7 @@ class RollLog extends React.Component<RollLogProps> {
 					{ this.generateTableRows() }
 				</tbody>
 			</table>
-		);
+		) : null;
 	}
 }
 

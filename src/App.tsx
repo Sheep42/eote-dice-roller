@@ -6,6 +6,7 @@ import DiceDisplay from './components/DiceDisplay';
 import ResultsBox from './components/ResultsBox';
 import Button from './components/Button';
 import RollLog from './components/RollLog';
+import CritRoll from './components/CritRoll';
 
 class App extends React.Component<{}, AppState> {
 
@@ -33,6 +34,8 @@ class App extends React.Component<{}, AppState> {
     this.clearCurrentRoll = this.clearCurrentRoll.bind( this );
     this.clearRollLog = this.clearRollLog.bind( this );
     this.handleReroll = this.handleReroll.bind( this );
+    this.toggleRollLog = this.toggleRollLog.bind( this );
+    this.toggleCritRoll = this.toggleCritRoll.bind( this );
 
     this.state = {
       rollLog: log,
@@ -42,6 +45,8 @@ class App extends React.Component<{}, AppState> {
         fullRoll: [],
         calcRoll: [],
       },
+      showRollLog: true,
+      showCritRoll: false,
     };
   }
 
@@ -197,6 +202,24 @@ class App extends React.Component<{}, AppState> {
 
   }
 
+  toggleRollLog() {
+
+    this.setState({
+      showRollLog: true,
+      showCritRoll: false,
+    });
+
+  }
+
+  toggleCritRoll() {
+
+    this.setState({
+      showRollLog: false,
+      showCritRoll: true,
+    });
+
+  }
+
   render(){ 
     return (
     <div className="App">
@@ -233,13 +256,30 @@ class App extends React.Component<{}, AppState> {
         />
       </section>
 
-      <h3>Roll Log</h3>
+      <section className="section-btns">
+        <Button
+          text="Roll Log"
+          className="btn btn-secondary"
+          clickHandler={ this.toggleRollLog }
+        />
+        <Button
+          text="Crit"
+          className="btn btn-secondary"
+          clickHandler={ this.toggleCritRoll }
+        />
+      </section>
+
       <section className='section-roll-log'>
         <RollLog 
           rollLog={ this.state.rollLog }
           handleReroll={ this.handleReroll } 
+          showRollLog={ this.state.showRollLog }
         />
       </section>
+
+      <CritRoll 
+        showCritRoll={ this.state.showCritRoll }
+      />
     </div>
     );
   }
@@ -248,7 +288,9 @@ class App extends React.Component<{}, AppState> {
 type AppState = {
   rollLog: Array<RollOutcome>,
   currentRoll: Array<DiceRoll>,
-  rollOutcome: RollOutcome
+  rollOutcome: RollOutcome,
+  showRollLog: Boolean,
+  showCritRoll: Boolean,
 };
 
 // The combined results of all dice rolls

@@ -30,7 +30,7 @@ class CritRoll extends React.Component<CritRollProps, CritRollState> {
 					className="btn btn-primary"
 					clickHandler={ () => { 
 							this.setState({
-								critResult: Math.floor( Math.random() * 100 ) + ( 10 * this.state.critModifier ),
+								critResult: Math.floor( Math.random() * 100 ) + 1 + ( 10 * this.state.critModifier ),
 							}); 
 						} 
 					}

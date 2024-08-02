@@ -37,6 +37,23 @@ section {
   }
 }
 
+.results {
+
+  .copied-confirm {
+    display: inline-block;
+    width: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    &.show {
+      width: fit-content;
+      margin-left: 16px;
+      opacity: 1;
+    }
+  }
+
+}
+
 .results-box {
   max-width: 400px;
   margin: 80px auto 0;

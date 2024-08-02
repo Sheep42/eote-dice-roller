@@ -2,6 +2,7 @@ import React from "react";
 
 type ButtonProps = {
 	text: string,
+	title?: string,
 	clickHandler: Function,
 	className: string
 };
@@ -22,6 +23,7 @@ class Button extends React.Component<ButtonProps> {
 		<button
 			onClick={ this.handleClick }
 			className={ this.props.className }
+			title={ this.props.title ? this.props.title : "" }
 		>
 			{ this.props.text }
 		</button>

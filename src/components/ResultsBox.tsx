@@ -1,15 +1,67 @@
 import React from "react";
 import { diceSymbols, DieSymbol } from "../App";
+import Button from "./Button";
 
 type ResultsBoxProps = {
 	fullRoll: Array<DieSymbol>,
-	calcRoll: Array<DieSymbol>
+	calcRoll: Array<DieSymbol>,
 };
 
-class ResultsBox extends React.Component<ResultsBoxProps> {
+type ResultsBoxState = {
+	rollDisplay: string,
+	rollCalced: string,
+	copyClick:  boolean,
+};
 
-	render() {
-		
+class ResultsBox extends React.Component<ResultsBoxProps, ResultsBoxState> {
+
+	constructor( props: ResultsBoxProps ) {
+
+		super( props );
+
+		this.state = {
+			rollDisplay: "",
+			rollCalced: "",
+			copyClick: false,
+		};
+
+		this.copyResults = this.copyResults.bind( this );
+		this.calcResults = this.calcResults.bind( this );
+
+	}
+
+	componentDidMount(): void {
+		this.calcResults( this.state );
+	}
+
+	componentDidUpdate( prevProps: ResultsBoxProps, prevState: ResultsBoxState ): void {
+
+		if( this.state.copyClick ) {
+			setTimeout( () => {
+				this.setState( { copyClick: false } );
+			}, 750 );
+		}
+
+		this.calcResults( prevState );
+	}
+	
+	copyResults() {
+
+		if( !navigator.clipboard ) { return; }
+
+		navigator.clipboard.writeText( this.state.rollCalced ).then(
+			() => {
+				this.setState( { copyClick: true } );
+			},
+			( err ) => {
+				console.error( err );
+			}
+		);
+
+	}
+
+	calcResults( prevState: ResultsBoxState ) {
+
 		let rollDisplay = '';
 		let rollCalced = '';
 
@@ -47,12 +99,25 @@ class ResultsBox extends React.Component<ResultsBoxProps> {
 			rollCalced = 'Wash';
 		}
 
+		if( prevState.rollDisplay != rollDisplay || prevState.rollCalced != rollCalced ) {
+			this.setState( { rollDisplay, rollCalced } );
+		}
+
+	}
+
+	render() {
 		return (
 		<div className="results">
 			<div className="results-box">
-				{ rollDisplay }
+				{ this.state.rollDisplay }
 			</div>
-			<p className="results-calced">{ rollCalced }</p>
+
+			<p className="results-calced">
+				{ this.state.rollCalced } 
+				<span className={ this.state.copyClick ? "copied-confirm show" : "copied-confirm" }>Copied!</span>
+			</p>
+
+			{ this.state.rollCalced && navigator.clipboard && <Button text="Copy" title="Copy result to your clipboard" className="btn btn-primary" clickHandler={ this.copyResults } /> }
 		</div>
 		);
 	}
